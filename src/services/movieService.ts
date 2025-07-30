@@ -8,7 +8,6 @@ interface FetchMoviesResponse{
     results: Movie[];
 }
 
-
 export const fetchMovies = async (query: string):Promise<Movie[]> => {
     const response = await axios.get<FetchMoviesResponse>(BASE_URL, {
         params: {
@@ -19,4 +18,4 @@ export const fetchMovies = async (query: string):Promise<Movie[]> => {
         },
     });
     return response.data.results;
-}
+} 
