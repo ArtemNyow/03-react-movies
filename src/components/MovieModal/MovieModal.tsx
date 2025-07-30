@@ -3,13 +3,14 @@
 import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
 import styles from './MovieModal.module.css';
+import type { Movie } from '../../types/movie';
 
 interface ModalProps {
   onClose: () => void;
-  children: React.ReactNode;
+  movie: Movie;
 }
 
-export default function Modal({ onClose, children }: ModalProps) {
+export default function MovieModal({ onClose, movie }: ModalProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -47,9 +48,26 @@ export default function Modal({ onClose, children }: ModalProps) {
         >
           &times;
         </button>
-        {children}
+         <img
+                      src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+                      alt={movie.title}
+                      className={styles.image}
+          />
+          <div className={styles.content}>
+            <h2>{movie.title}</h2>
+            <p>{movie.overview}</p>
+            <p>
+              <strong>Release Date:</strong> {movie.release_date}
+            </p>
+            <p>
+              <strong>Rating:</strong> {movie.vote_average}/10
+            </p>
+          </div>
       </div>
     </div>,
     document.body
   );
 }
+
+
+

@@ -5,13 +5,12 @@ import SearchBar from '../SearchBar/SearchBar';
 import MovieGrid from '../MovieGrid/MovieGrid';
 import Loader from '../Loader/Loader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import Modal from '../MovieModal/MovieModal';
+import MovieModal from '../MovieModal/MovieModal';
 
 import { fetchMovies } from '../../services/movieService';
 import type { Movie } from '../../types/movie';
-
 import './App.module.css'
-import ModalCss from '../MovieModal/MovieModal.module.css'
+
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,26 +57,8 @@ export default function App() {
       {!isLoading && !isError && movies.length > 0 && (
         <MovieGrid movies={movies} onSelect={handleSelectMovie} />
       )}
-
-      {selectedMovie && (
-        <Modal onClose={handleCloseModal}>
-          <img
-                      src={`https://image.tmdb.org/t/p/original${selectedMovie.backdrop_path}`}
-                      alt={selectedMovie.title}
-                      className={ModalCss.image}
-          />
-          <div className={ModalCss.content}>
-            <h2>{selectedMovie.title}</h2>
-            <p>{selectedMovie.overview}</p>
-            <p>
-              <strong>Release Date:</strong> {selectedMovie.release_date}
-            </p>
-            <p>
-              <strong>Rating:</strong> {selectedMovie.vote_average}/10
-            </p>
-          </div>
-        </Modal>
-      )}
+      {selectedMovie && (<MovieModal onClose={handleCloseModal} movie={selectedMovie}/>)}
+        
     </>
   );
 }
